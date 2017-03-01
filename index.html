@@ -185,17 +185,46 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Here I test various models to predict.</p>
+<p>One of the old methods of diagnosis of Breast Cancer is carried out by Fine Needle Aspiration procedure. A thin and hollow needle is inserted into a lump and a sample of cells is extracted. The specimen is then studied under a microscope and the following measurements are made.</p>
+<p><b>1: Sample code number: id number</b></p>
+<p><b>2: Clump Thickness: 1 - 10</b></p>
+<p>Determines if the cells are mono-layered or multi-layered</p>
+<p><b>3: Uniformity of Cell Size: 1 - 10</b></p>
+<p>A measure of the variance of the sizes of the cells. Cancer cells vary in size.</p>
+<p><b>4: Uniformity of Cell Shape: 1 - 10</b></p>
+<p>A measure of the variance in the shapes of the cells. Cancer cells vary in shape.</p>
+<p><b>5: Marginal Adhesion: 1 - 10</b></p>
+<p>Assess the adhesion ability of the cells. Cancer cells tend not to stick together.</p>
+<p><b>6: Single Epithelial Cell Size: 1 - 10</b></p>
+<p>Determines if the epithelial cells have signifcantly enlarged.</p>
+<p><b>7: Bare Nuclei: 1 - 10</b></p>
+<p>A measurement of the proportion of the number of cells not covered by cytoplasm to those that are.</p>
+<p><b>8: Bland Chromatin: 1 - 10</b></p>
+<p>A rating of the texture of nucleus from fine to coarse.</p>
+<p><b>9: Normal Nucleoli: 1 - 10</b></p>
+<p>Nucleoli are small structures present in the nucleus. Normally nucleoli are small and barely visible. However, it becomes visible and plentiful in case of malignancy. A higher value of this attribute would indicate a higher chance of malignancy.</p>
+<p><b>10: Mitoses: 1 - 10</b></p>
+<p>Describes the level of cell division.</p>
+<p><b>11: Class: (2 for benign, 4 for malignant)</b></p>
+<p>The dataset has been created by Dr. WIlliam H. Wolberg (physician), University of Wisconsin Hospitals, Madison, Wisconsin, USA. 
+Here is the link to this repository on UCI website.
+<a href="https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+(Original">https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+(Original</a>)</p>
+<p>Here we will use this dataset to create a model that can identify whether a tumor is malignant(cancerous) or benign.</p>
+<p>We will use three methods for classification problem and assess the performance of each method.</p>
+<p>The three methods that we will use are as following.<br>
+<b>1. Logistic Regression</b><br>
+<b>2. Linear Discriminant Analysis</b><br>
+<b>3. K-nearest neighbors</b></p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>breast_data <span class="o">=</span> read.csv<span class="p">(</span><span class="s">&quot;breast-cancer-wisconsin.csv&quot;</span><span class="p">,</span>header<span class="o">=</span><span class="bp">F</span><span class="p">,</span>na.strings<span class="o">=</span><span class="s">&quot;?&quot;</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span>breast_data <span class="o">=</span> read.csv<span class="p">(</span><span class="s">&quot;datasets/breast-cancer-wisconsin.csv&quot;</span><span class="p">,</span>header<span class="o">=</span><span class="bp">F</span><span class="p">,</span>na.strings<span class="o">=</span><span class="s">&quot;?&quot;</span><span class="p">)</span>
 breast_data <span class="o">=</span> na.omit<span class="p">(</span>breast_data<span class="p">)</span>
 breast_data <span class="o">=</span> breast_data<span class="p">[,</span><span class="m">-1</span><span class="p">]</span>
 <span class="kp">names</span><span class="p">(</span>breast_data<span class="p">)</span>
@@ -235,7 +264,7 @@ breast_data <span class="o">=</span> breast_data<span class="p">[,</span><span c
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">nrow</span><span class="p">(</span>breast_data<span class="p">)</span>
@@ -263,7 +292,7 @@ breast_data <span class="o">=</span> breast_data<span class="p">[,</span><span c
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>breast_data<span class="o">$</span>V11 <span class="o">=</span> <span class="kp">as.factor</span><span class="p">(</span>breast_data<span class="o">$</span>V11<span class="p">)</span>
@@ -317,6 +346,152 @@ glm.pred<span class="p">[</span>glm.prob<span class="o">&gt;</span><span class="
 
 <div class="output_html rendered_html output_subarea ">
 97.7443609022556
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="kp">summary</span><span class="p">(</span>glm.fit<span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+
+<div class="output_text output_subarea ">
+<pre>
+Call:
+glm(formula = V11 ~ ., family = binomial, data = breast_data, 
+    subset = train)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-3.4181  -0.1145  -0.0639   0.0231   2.0039  
+
+Coefficients:
+             Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -10.14349    1.29725  -7.819 5.31e-15 ***
+V2            0.50161    0.15677   3.200  0.00138 ** 
+V3           -0.08125    0.21424  -0.379  0.70449    
+V4            0.49669    0.25178   1.973  0.04853 *  
+V5            0.30697    0.12642   2.428  0.01517 *  
+V6            0.13494    0.16705   0.808  0.41921    
+V7            0.28867    0.09704   2.975  0.00293 ** 
+V8            0.49372    0.18590   2.656  0.00791 ** 
+V9            0.22690    0.11776   1.927  0.05401 .  
+V10           0.47054    0.35130   1.339  0.18043    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 718.760  on 549  degrees of freedom
+Residual deviance:  89.434  on 540  degrees of freedom
+AIC: 109.43
+
+Number of Fisher Scoring iterations: 8
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#v3 - uniformity of cell size v5- uniformity of cell shape</span>
+<span class="c1">#find correlation between these attributes and the output</span>
+cor<span class="p">(</span>glm.prob<span class="p">,</span>breast_data<span class="p">[</span><span class="o">-</span>train<span class="p">,]</span><span class="o">$</span>V3<span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+0.8775012755076
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span>cor<span class="p">(</span>glm.prob<span class="p">,</span>breast_data<span class="p">[</span><span class="o">-</span>train<span class="p">,]</span><span class="o">$</span>V4<span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+0.856029034049229
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span>cor<span class="p">(</span>glm.prob<span class="p">,</span>breast_data<span class="p">[</span><span class="o">-</span>train<span class="p">,]</span><span class="o">$</span>V10<span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+0.494836669979208
 </div>
 
 </div>

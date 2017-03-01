@@ -1,5 +1,5 @@
 
-breast_data = read.csv("breast-cancer-wisconsin.csv",header=F,na.strings="?")
+breast_data = read.csv("datasets/breast-cancer-wisconsin.csv",header=F,na.strings="?")
 breast_data = na.omit(breast_data)
 breast_data = breast_data[,-1]
 names(breast_data)
@@ -17,5 +17,15 @@ mean(glm.pred!=breast_data[-train,]$V11)*100
 
 #accuracy
 mean(glm.pred==breast_data[-train,]$V11)*100
+
+summary(glm.fit)
+
+#v3 - uniformity of cell size v5- uniformity of cell shape
+#find correlation between these attributes and the output
+cor(glm.prob,breast_data[-train,]$V3)
+
+cor(glm.prob,breast_data[-train,]$V4)
+
+cor(glm.prob,breast_data[-train,]$V10)
 
 
