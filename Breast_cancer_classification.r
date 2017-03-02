@@ -32,4 +32,40 @@ table(glm.pred,breast_data[-train,]$V11)
 
 39/(39+2)*100
 
+library(MASS)
+lda.fit = lda(V11~.,data=breast_data[train,])
+lda.pred = predict(lda.fit,newdata=breast_data[-train,])
+
+#error rate
+mean(lda.pred$class!=breast_data[-train,]$V11)*100
+
+#accuracy
+mean(lda.pred$class==breast_data[-train,]$V11)*100
+
+table(lda.pred$class,breast_data[-train,]$V11)
+
+92/92*100
+
+38/(38+3)*100
+
+library(class)
+train.Y = breast_data[train,]$V11
+train_data = breast_data[train,-ncol(breast_data)]
+test_data = breast_data[-train,-ncol(breast_data)]
+test.Y = breast_data[-train,]$V11
+#knn method with k=4
+knn.pred = knn(train_data,test_data,train.Y,k=4)
+
+##error rate
+mean(knn.pred!=test.Y)*100
+
+##accuracy
+mean(knn.pred==test.Y)*100
+
+table(knn.pred,test.Y)
+
+40/(40+1)*100
+
+90/(90+2)*100
+
 

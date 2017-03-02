@@ -176,7 +176,18 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Breast-Cancer-Tumor-Classification-(Work-in-progress)">Breast Cancer Tumor Classification (Work in progress)<a class="anchor-link" href="#Breast-Cancer-Tumor-Classification-(Work-in-progress)">&#182;</a></h2>
+<h2 id="Breast-Cancer-Tumor-Classification-(Malignant-or-Benign)---Work-in-progress">Breast Cancer Tumor Classification (Malignant or Benign) - Work in progress<a class="anchor-link" href="#Breast-Cancer-Tumor-Classification-(Malignant-or-Benign)---Work-in-progress">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Behroz Ahmad Ali<br>
+bhrz.ali@gmail.com</p>
+
 </div>
 </div>
 </div>
@@ -210,9 +221,8 @@ div#notebook {
 Here is the link to the dataset repository on UCI website.
 <a href="https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+(Original">https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+(Original</a>)</p>
 <p>We will use the dataset to create a model that can identify whether a tumor is malignant(cancerous) or benign.</p>
-<p>We will use three methods for this classification problem and assess the performance of each method.</p>
-<p>The three methods that we will use are as following.<br>
-<b>1. Logistic Regression</b><br>
+<p>We will use the following three methods for this classification problem and assess the performance of each method.</p>
+<p><b>1. Logistic Regression</b><br>
 <b>2. Linear Discriminant Analysis</b><br>
 <b>3. K-nearest neighbors</b></p>
 
@@ -497,6 +507,390 @@ glm.pred  2  4
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>And it predicts 95.1% of the malignant cases correctly.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Linear-Discriminant-Analysis">Linear Discriminant Analysis<a class="anchor-link" href="#Linear-Discriminant-Analysis">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="kn">library</span><span class="p">(</span>MASS<span class="p">)</span>
+lda.fit <span class="o">=</span> lda<span class="p">(</span>V11<span class="o">~</span><span class="m">.</span><span class="p">,</span>data<span class="o">=</span>breast_data<span class="p">[</span>train<span class="p">,])</span>
+lda.pred <span class="o">=</span> predict<span class="p">(</span>lda.fit<span class="p">,</span>newdata<span class="o">=</span>breast_data<span class="p">[</span><span class="o">-</span>train<span class="p">,])</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#error rate</span>
+<span class="kp">mean</span><span class="p">(</span>lda.pred<span class="o">$</span><span class="kp">class</span><span class="o">!=</span>breast_data<span class="p">[</span><span class="o">-</span>train<span class="p">,]</span><span class="o">$</span>V11<span class="p">)</span><span class="o">*</span><span class="m">100</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+2.25563909774436
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[35]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#accuracy</span>
+<span class="kp">mean</span><span class="p">(</span>lda.pred<span class="o">$</span>class<span class="o">==</span>breast_data<span class="p">[</span><span class="o">-</span>train<span class="p">,]</span><span class="o">$</span>V11<span class="p">)</span><span class="o">*</span><span class="m">100</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+97.7443609022556
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[41]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="kp">table</span><span class="p">(</span>lda.pred<span class="o">$</span><span class="kp">class</span><span class="p">,</span>breast_data<span class="p">[</span><span class="o">-</span>train<span class="p">,]</span><span class="o">$</span>V11<span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+
+<div class="output_text output_subarea ">
+<pre>   
+     2  4
+  2 92  3
+  4  0 38</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[42]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="m">92</span><span class="o">/</span><span class="m">92</span><span class="o">*</span><span class="m">100</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+100
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As we can see the lda model predicts 100% of the benign cases correctly.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[43]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="m">38</span><span class="o">/</span><span class="p">(</span><span class="m">38+3</span><span class="p">)</span><span class="o">*</span><span class="m">100</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+92.6829268292683
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>And it predicts 92.68% of the malignant cases correctly.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="K-nearest-neighbor">K-nearest neighbor<a class="anchor-link" href="#K-nearest-neighbor">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[75]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="kn">library</span><span class="p">(</span><span class="kp">class</span><span class="p">)</span>
+train.Y <span class="o">=</span> breast_data<span class="p">[</span>train<span class="p">,]</span><span class="o">$</span>V11
+train_data <span class="o">=</span> breast_data<span class="p">[</span>train<span class="p">,</span><span class="o">-</span><span class="kp">ncol</span><span class="p">(</span>breast_data<span class="p">)]</span>
+test_data <span class="o">=</span> breast_data<span class="p">[</span><span class="o">-</span>train<span class="p">,</span><span class="o">-</span><span class="kp">ncol</span><span class="p">(</span>breast_data<span class="p">)]</span>
+test.Y <span class="o">=</span> breast_data<span class="p">[</span><span class="o">-</span>train<span class="p">,]</span><span class="o">$</span>V11
+<span class="c1">#knn method with k=4</span>
+knn.pred <span class="o">=</span> knn<span class="p">(</span>train_data<span class="p">,</span>test_data<span class="p">,</span>train.Y<span class="p">,</span>k<span class="o">=</span><span class="m">4</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[76]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">##error rate</span>
+<span class="kp">mean</span><span class="p">(</span>knn.pred<span class="o">!=</span>test.Y<span class="p">)</span><span class="o">*</span><span class="m">100</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+2.25563909774436
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[77]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">##accuracy</span>
+<span class="kp">mean</span><span class="p">(</span>knn.pred<span class="o">==</span>test.Y<span class="p">)</span><span class="o">*</span><span class="m">100</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+97.7443609022556
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[78]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="kp">table</span><span class="p">(</span>knn.pred<span class="p">,</span>test.Y<span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+
+<div class="output_text output_subarea ">
+<pre>        test.Y
+knn.pred  2  4
+       2 90  1
+       4  2 40</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[82]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="m">40</span><span class="o">/</span><span class="p">(</span><span class="m">40+1</span><span class="p">)</span><span class="o">*</span><span class="m">100</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+97.5609756097561
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As we can see the KNN method with K=4 predicts 97.6% of the benign cases correctly</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[80]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="m">90</span><span class="o">/</span><span class="p">(</span><span class="m">90+2</span><span class="p">)</span><span class="o">*</span><span class="m">100</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+97.8260869565217
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>And it predicts 97.8% of the malignant cases correctly</p>
 
 </div>
 </div>
